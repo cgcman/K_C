@@ -26,6 +26,20 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    kotlinOptions {
+        jvmTarget = JavaVersion.VERSION_1_8.toString()
+    }
+
+    packagingOptions {
+        exclude 'META-INF/AL2.0'
+        exclude 'META-INF/LGPL2.1'
+    }
 }
 
 def lifeCycleExtensionVersion = '1.1.1'
@@ -96,4 +110,5 @@ dependencies {
     ///////// STETHO /////////////
     implementation 'com.facebook.stetho:stetho:1.5.1'
 
+    implementation project(':core')
 }
