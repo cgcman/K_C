@@ -1,15 +1,15 @@
-package com.grdj.k_c.ui
+package com.grdj.k_c.presenter.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.activity.viewModels
+import androidx.lifecycle.Observer
 import com.grdj.k_c.R
-import com.grdj.k_c.core.data.ContactDataSource
-import com.grdj.k_c.core.data.ContactRepository
-import com.grdj.k_c.framework.DbContactDataSource
-import com.grdj.k_c.framework.InMemoryOpenContactDataSource
-import com.grdj.k_c.viewmodel.MainViewModel
+import com.grdj.k_c.framework.ext.observe
+import com.grdj.k_c.presenter.viewmodel.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import domain.Contact
+import timber.log.Timber
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
@@ -19,7 +19,13 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
         viewModel.fetchContacts()
+        viewModel.contacts.observe(this, Observer {
+            onGetContacts(it)
+        })
+    }
+
+    private fun onGetContacts(list: List<Contact>){
+        Timber.d("$list");
     }
 }

@@ -1,4 +1,4 @@
-package com.grdj.k_c.Utils
+package com.grdj.k_c.framework.utils
 
 import android.util.Log
 import timber.log.Timber

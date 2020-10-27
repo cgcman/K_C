@@ -1,17 +1,20 @@
 package com.grdj.k_c.di
 
-import android.app.Application
 import android.content.Context
-import com.grdj.k_c.App
 import com.grdj.k_c.core.data.ContactRepository
-import com.grdj.k_c.core.interactors.AddContact
-import com.grdj.k_c.core.interactors.ReadContacts
-import com.grdj.k_c.core.interactors.RemoveContact
-import com.grdj.k_c.core.interactors.SetOpenContact
-import com.grdj.k_c.framework.DbContactDataSource
-import com.grdj.k_c.framework.InMemoryOpenContactDataSource
+import com.grdj.k_c.core.interactors.*
+import com.grdj.k_c.framework.datasources.DbContactLocalDataSource
+import com.grdj.k_c.framework.datasources.InMemoryInMemoryContactDataSource
 import com.grdj.k_c.framework.Interactors
-import dagger.Binds
+import com.grdj.k_c.framework.datasources.NetworkContactLocalDataSource
+import com.grdj.k_c.framework.utils.DefaultDispatcherProvider
+import com.grdj.k_c.framework.utils.DispatcherProvider
+import com.grdj.k_c.framework.errormanager.ErrorManagerHelper
+import com.grdj.k_c.framework.errormanager.ErrorManagerHelperImpl
+import com.grdj.k_c.framework.network.ContactService
+import com.grdj.k_c.framework.network.ContactServiceImpl
+import com.grdj.k_c.framework.resources.ResourcesProvider
+import com.grdj.k_c.framework.resources.ResourcesProviderImpl
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -24,32 +27,75 @@ import javax.inject.Singleton
 @InstallIn(ApplicationComponent::class)
 class ApplicationModule {
 
-    @Singleton
+    @Provides
+    fun provideContactService(@ApplicationContext context: Context) : ContactService = ContactServiceImpl(
+        ResourcesProviderImpl(context)
+    )
+
+    @Provides
+    fun provideErrorManagerHelper() : ErrorManagerHelper = ErrorManagerHelperImpl()
+
+    @Provides
+    fun provideResourcesProvider(@ApplicationContext context: Context) : ResourcesProvider = ResourcesProviderImpl(context)
+
     @Provides
     fun provideInteractors(@ApplicationContext context: Context) : Interactors = Interactors(
         AddContact(
             ContactRepository(
-                DbContactDataSource(context),
-                InMemoryOpenContactDataSource()
+                DbContactLocalDataSource(context),
+                InMemoryInMemoryContactDataSource(),
+                NetworkContactLocalDataSource(
+                    ContactServiceImpl(
+                    ResourcesProviderImpl(context)
+                ))
             )
         ),
         RemoveContact(
             ContactRepository(
-                DbContactDataSource(context),
-                InMemoryOpenContactDataSource()
+                DbContactLocalDataSource(context),
+                InMemoryInMemoryContactDataSource(),
+                NetworkContactLocalDataSource(
+                    ContactServiceImpl(
+                    ResourcesProviderImpl(context)
+                ))
             )
         ),
         ReadContacts(
             ContactRepository(
-                DbContactDataSource(context),
-                InMemoryOpenContactDataSource()
+                DbContactLocalDataSource(context),
+                InMemoryInMemoryContactDataSource(),
+                NetworkContactLocalDataSource(
+                    ContactServiceImpl(
+                        ResourcesProviderImpl(context)
+                    )
+                )
             )
         ),
         SetOpenContact(
             ContactRepository(
-                DbContactDataSource(context),
-                InMemoryOpenContactDataSource()
+                DbContactLocalDataSource(context),
+                InMemoryInMemoryContactDataSource(),
+                NetworkContactLocalDataSource(
+                    ContactServiceImpl(
+                        ResourcesProviderImpl(context)
+                    )
+                )
+            )
+        ),
+        FetchContacts(
+            ContactRepository(
+                DbContactLocalDataSource(context),
+                InMemoryInMemoryContactDataSource(),
+                NetworkContactLocalDataSource(
+                    ContactServiceImpl(
+                        ResourcesProviderImpl(context)
+                    )
+                )
             )
         )
     )
+
+    @Singleton
+    @Provides
+    fun provideDispatcherProvider() : DispatcherProvider = DefaultDispatcherProvider()
 }

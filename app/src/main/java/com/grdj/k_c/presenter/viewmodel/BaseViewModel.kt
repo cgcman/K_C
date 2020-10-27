@@ -1,4 +1,4 @@
-package com.grdj.k_c.viewmodel
+package com.grdj.k_c.presenter.viewmodel
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel

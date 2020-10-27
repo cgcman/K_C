@@ -3,7 +3,7 @@ package com.grdj.k_c
 import android.app.Application
 import com.facebook.stetho.BuildConfig
 import com.facebook.stetho.Stetho
-import com.grdj.k_c.Utils.CrashReportingTree
+import com.grdj.k_c.framework.utils.CrashReportingTree
 import dagger.hilt.android.HiltAndroidApp
 import timber.log.Timber
 

@@ -1,12 +1,12 @@
-package com.grdj.k_c.framework
+package com.grdj.k_c.framework.datasources
 
 import android.content.Context
-import com.grdj.k_c.core.data.ContactDataSource
+import com.grdj.k_c.core.data.ContactLocalDataSource
 import com.grdj.k_c.framework.db.ContactEntity
 import com.grdj.k_c.framework.db.KC_Database
 import domain.Contact
 
-class DbContactDataSource(context : Context) : ContactDataSource {
+class DbContactLocalDataSource(context : Context) : ContactLocalDataSource {
 
     private val contactDao = KC_Database.getInstance(context).contactDao()
 

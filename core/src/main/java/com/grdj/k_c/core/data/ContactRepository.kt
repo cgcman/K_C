@@ -3,11 +3,13 @@ package com.grdj.k_c.core.data
 import domain.Contact
 
 class ContactRepository(
-    private val dataSource: ContactDataSource,
-    private val openDataSource: OpenContactDataSource) {
-    suspend fun addContact(contact: Contact) = dataSource.add(contact)
-    suspend fun removeContact(contact: Contact) = dataSource.remove(contact)
-    suspend fun readContact() : List<Contact> = dataSource.read()
-    fun setOpenContact(contact: Contact) = openDataSource.setOpenContact(contact)
-    fun getOpenContact() : Contact = openDataSource.getOpenContact()
+    private val localDataSource: ContactLocalDataSource,
+    private val inMemoryDataSource: InMemoryContactDataSource,
+    private val networkDataSource: ContactNetworkDataSource) {
+    suspend fun addContact(contact: Contact) = localDataSource.add(contact)
+    suspend fun removeContact(contact: Contact) = localDataSource.remove(contact)
+    suspend fun readContact() : List<Contact> = localDataSource.read()
+    suspend fun fetchContact() : List<Contact> = networkDataSource.fetch()
+    fun setOpenContact(contact: Contact) = inMemoryDataSource.setOpenContact(contact)
+    fun getOpenContact() : Contact = inMemoryDataSource.getOpenContact()
 }

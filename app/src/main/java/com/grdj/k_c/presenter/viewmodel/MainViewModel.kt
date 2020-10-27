@@ -1,7 +1,8 @@
-package com.grdj.k_c.viewmodel
+package com.grdj.k_c.presenter.viewmodel
 
 import android.app.Application
 import androidx.hilt.lifecycle.ViewModelInject
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.grdj.k_c.framework.Interactors
 import domain.Contact
@@ -16,7 +17,7 @@ class MainViewModel @ViewModelInject constructor(
 
     fun fetchContacts() {
         launch {
-            contacts.postValue(interactors.readContacts())
+            contacts.postValue(interactors.fetchContacts())
         }
     }
 }

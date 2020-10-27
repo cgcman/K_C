@@ -1,5 +1,9 @@
 <resources>
     <string name="app_name">k_c</string>
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="NOT_CONNECTED_MESSAGE">No Internet Connection</string>
+    <string name="API_ERROR">An error has occurred. please try again</string>
+    <string name="DELETE_DB_ERROR">An error has occurred trying to delete on de internal DB</string>
+    <string name="DELETE_DB_SUCCESS">Post deleted Successfuly</string>
+    <string name="API_SERVICE">https://s3.amazonaws.com/</string>
 </resources>

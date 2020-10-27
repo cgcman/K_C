@@ -1,9 +1,9 @@
-package com.grdj.k_c.framework
+package com.grdj.k_c.framework.datasources
 
-import com.grdj.k_c.core.data.OpenContactDataSource
+import com.grdj.k_c.core.data.InMemoryContactDataSource
 import domain.Contact
 
-class InMemoryOpenContactDataSource : OpenContactDataSource {
+class InMemoryInMemoryContactDataSource : InMemoryContactDataSource {
 
     private var openContact: Contact = Contact.EMPTY
 
