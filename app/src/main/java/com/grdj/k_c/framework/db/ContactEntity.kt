@@ -11,12 +11,12 @@ import domain.Phone
 data class ContactEntity (
     @PrimaryKey(autoGenerate = true) val id: Int = 0,
     @ColumnInfo(name = "name") val name: String,
-    @ColumnInfo(name = "companyName") val companyName: String,
+    @ColumnInfo(name = "companyName") val companyName: String?,
     @ColumnInfo(name =" isFavorite") val isFavorite : Boolean,
     @ColumnInfo(name = "smallImageURL") val smallImageURL : String,
     @ColumnInfo(name = "largeImageURL") val largeImageURL : String,
     @ColumnInfo(name = "emailAddress") val emailAddress : String,
     @ColumnInfo(name = "birthdate") val birthdate : String,
-    @Embedded val phone : Phone,
-    @Embedded val address : Address
+    @Embedded val phone : Phone?,
+    @Embedded val address : Address?
 )

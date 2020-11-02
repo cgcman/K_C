@@ -26,6 +26,23 @@ class DbContactLocalDataSource(context : Context) : ContactLocalDataSource {
             ))
     }
 
+    override suspend fun addList(contacts: List<Contact>) {
+        contactDao.addContactList( contacts.map{ contact ->
+            ContactEntity(
+                contact.id,
+                contact.name,
+                contact.companyName,
+                contact.isFavorite,
+                contact.smallImageURL,
+                contact.largeImageURL,
+                contact.emailAddress,
+                contact.birthdate,
+                contact.phone,
+                contact.address
+            )
+        })
+    }
+
     override suspend fun read(): List<Contact> {
         return contactDao.getContacts().map {
             Contact(

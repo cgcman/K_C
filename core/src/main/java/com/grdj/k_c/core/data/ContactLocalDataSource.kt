@@ -4,6 +4,7 @@ import domain.Contact
 
 interface ContactLocalDataSource {
     suspend fun add(contact: Contact)
+    suspend fun addList(contacts: List<Contact>)
     suspend fun read(): List<Contact>
     suspend fun remove(contact: Contact)
 }

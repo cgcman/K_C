@@ -12,7 +12,6 @@ class ContactServiceImpl @Inject constructor(
     {
     private var base_url = resourcesProvider.getAPI_URL()
     val gson = GsonBuilder()
-        .excludeFieldsWithoutExposeAnnotation()
         .create()
 
     private val api = Retrofit.Builder()

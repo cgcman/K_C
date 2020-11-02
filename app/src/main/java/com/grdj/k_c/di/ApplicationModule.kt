@@ -15,12 +15,16 @@ import com.grdj.k_c.framework.network.ContactService
 import com.grdj.k_c.framework.network.ContactServiceImpl
 import com.grdj.k_c.framework.resources.ResourcesProvider
 import com.grdj.k_c.framework.resources.ResourcesProviderImpl
+import com.grdj.k_c.framework.utils.network.NetworkManager
+import com.grdj.k_c.framework.utils.network.NetworkManagerImpl
+import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ApplicationComponent
 import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Singleton
+import kotlin.coroutines.CoroutineContext
 
 
 @Module
@@ -39,6 +43,9 @@ class ApplicationModule {
     fun provideResourcesProvider(@ApplicationContext context: Context) : ResourcesProvider = ResourcesProviderImpl(context)
 
     @Provides
+    fun provideNetworkManager(@ApplicationContext context: Context) : NetworkManager = NetworkManagerImpl(context)
+
+    @Provides
     fun provideInteractors(@ApplicationContext context: Context) : Interactors = Interactors(
         AddContact(
             ContactRepository(
@@ -48,6 +55,16 @@ class ApplicationModule {
                     ContactServiceImpl(
                     ResourcesProviderImpl(context)
                 ))
+            )
+        ),
+        AddContacts(
+            ContactRepository(
+                DbContactLocalDataSource(context),
+                InMemoryInMemoryContactDataSource(),
+                NetworkContactLocalDataSource(
+                    ContactServiceImpl(
+                        ResourcesProviderImpl(context)
+                    ))
             )
         ),
         RemoveContact(
